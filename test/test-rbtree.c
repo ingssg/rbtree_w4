@@ -136,6 +136,7 @@ void test_to_array(rbtree *t, const key_t *arr, const size_t n) {
   key_t *res = calloc(n, sizeof(key_t));
   rbtree_to_array(t, res, n);
   for (int i = 0; i < n; i++) {
+    // printf("%d and %d\n", arr[i], res[i]);
     assert(arr[i] == res[i]);
   }
   free(res);
@@ -311,17 +312,23 @@ void test_to_array_suite() {
 }
 
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
+  // printf("first\n");
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_insert(t, arr[i]);
+    // printf("%d 123123\n", p->key);
     assert(p != NULL);
   }
 
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_find(t, arr[i]);
+    // printf("third\n");
+    // printf("%d\n", p->key);
     // printf("arr[%d] = %d\n", i, arr[i]);
+    // printf("지울놈 : %d\n", p->key);
     assert(p != NULL);
     assert(p->key == arr[i]);
     rbtree_erase(t, p);
+    // printf("%d 하나지웠음\n", arr[i]);
   }
 
   for (int i = 0; i < n; i++) {
@@ -359,8 +366,8 @@ void test_find_erase_rand(const size_t n, const unsigned int seed) {
   key_t *arr = calloc(n, sizeof(key_t));
   for (int i = 0; i < n; i++) {
     arr[i] = rand();
+    // printf("%d ??\n", arr[i]);
   }
-
   test_find_erase(t, arr, n);
 
   free(arr);
